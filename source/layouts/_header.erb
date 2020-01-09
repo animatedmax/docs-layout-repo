@@ -1,40 +1,117 @@
-<% if vars.use_global_header && current_page.data.owner != "Identity Service" && current_page.data.owner != "Pivotal HD" %>
+<% if vars.use_global_header && current_page.data.owner != "Pivotal HD" %>
   <% if current_page.path.include? "partners" %>
   <header class="partners-global-header header header-layout js-bar-links">
+    <div class='container'>
+      <a class="pivotal-logo" href="/">
+      </a>
+      <a href="/" class="global-header-title">
+        <%= vars.title %>
+      </a>
+      <div class="btn-menu" data-behavior="MenuMobile"></div>
+      <div class="header-links">
+        <div class="header-item">
+          <a href="<%= vars.global_header_product_href %>"><%= vars.global_header_product_link_text %></a>
+        </div>
+        <div class="header-item">
+          <%= vars.support_link %>
+        </div>
+
+        <div class="header-item embedded-searchbar">
+          <% if elastic_search? %>
+            <form method="get" action="/search">
+              <input name="q" placeholder="<%= product_info['search_placeholder'] || 'Search' %>" class="search-box" />
+              <% if !product_info['local_header_title'].nil? %>
+                <input type="hidden" name="product_name" value="<%= product_info['local_header_title'] %>" />
+              <% end %>
+              <% if !product_info['local_product_version'].nil? %>
+                <input type="hidden" name="product_version" value="<%= product_info['local_product_version'] %>"/>
+              <% end %>
+            </form>
+          <% else %>
+            <gcse:searchbox></gcse:searchbox>
+          <% end %>
+        </div>
+        
+      </div>
+    </div>
   <% else %>
   <header class="global-header header header-layout js-bar-links">
-  <% end %>
-    <a class="pivotal-logo" href="/">
-    </a>
-    <a href="/" class="global-header-title">
-      <%= vars.title %>
-    </a>
-    <div class="btn-menu" data-behavior="MenuMobile"></div>
-    <div class="header-links">
-      <div class="header-item">
-        <a href="<%= vars.global_header_product_href %>"><%= vars.global_header_product_link_text %></a>
+    <div class='super-nav'>
+      <div class='container-modified'>
+        <a href="/" class="global-header-title">
+          <img class="pivotal-logo" src="https://d1fto35gcfffzn.cloudfront.net/images/docs/logo-docs.svg">
+        </a>
+        <div class='header-links'>
+           <div class="header-item">
+            <a href="https://pivotal.io/support">Support</a>
+          </div>
+          <div class="header-item">
+            <a href="https://network.pivotal.io">Downloads</a>
+          </div>
+          <div class='header-item' id='contact-header-item'>
+            <a href='https://pivotal.io/contact'>Contact Us</a>
+          </div>
+          <div class='header-item'>
+            <a href="https://login.run.pivotal.io">Sign In</a>
+          </div>
+        </div>
       </div>
-      <div class="header-item">
-        <%= vars.support_link %>
-      </div>
-
-      <div class="header-item embedded-searchbar">
-        <% if elastic_search? %>
-          <form method="get" action="/search">
-            <input name="q" placeholder="<%= product_info['search_placeholder'] || 'Search' %>" class="search-box" />
-            <% if !product_info['local_header_title'].nil? %>
-              <input type="hidden" name="product_name" value="<%= product_info['local_header_title'] %>" />
-            <% end %>
-            <% if !product_info['local_product_version'].nil? %>
-              <input type="hidden" name="product_version" value="<%= product_info['local_product_version'] %>"/>
-            <% end %>
-          </form>
-        <% else %>
-          <gcse:searchbox></gcse:searchbox>
-        <% end %>
-      </div>
-      
     </div>
+    <div id='info-search-bar'>
+      <div class='container-modified'>
+        <%= partial 'layouts/local-header' %>
+        <div class="header-item embedded-searchbar">
+          <% if elastic_search? %>
+            <form method="get" action="/search">
+              <input name="q" placeholder="<%= product_info['search_placeholder'] || 'Search' %>" class="search-box" />
+              <% if !product_info['local_header_title'].nil? %>
+                <input type="hidden" name="product_name" value="<%= product_info['local_header_title'] %>" />
+              <% end %>
+              <% if !product_info['local_product_version'].nil? %>
+                <input type="hidden" name="product_version" value="<%= product_info['local_product_version'] %>"/>
+              <% end %>
+            </form>
+          <% else %>
+            <gcse:searchbox></gcse:searchbox>
+          <% end %>
+        </div>
+        <div class="btn-menu" data-behavior="MenuMobile"></div>
+        <div class='header-links mobile-only'>
+          <div class="header-item" id='docs-header-item'>
+            <a href='https://docs.pivotal.io'>All docs</a>
+          </div>
+          <div class="header-item">
+            <a href="https://network.pivotal.io">Downloads</a>
+          </div>
+          <div class="header-item">
+            <a href="https://pivotal.io/support">Support</a>
+          </div>
+          <div class='header-item' id='contact-header-item'>
+            <a href='https://pivotal.io/contact'>Contact Us</a>
+          </div>
+          <div class='header-item'>
+            <a href="https://login.run.pivotal.io">Sign In</a>
+          </div>
+
+          <div class="header-item embedded-searchbar">
+            <% if elastic_search? %>
+              <form method="get" action="/search">
+                <input name="q" placeholder="<%= product_info['search_placeholder'] || 'Search' %>" class="search-box" />
+                <% if !product_info['local_header_title'].nil? %>
+                  <input type="hidden" name="product_name" value="<%= product_info['local_header_title'] %>" />
+                <% end %>
+                <% if !product_info['local_product_version'].nil? %>
+                  <input type="hidden" name="product_version" value="<%= product_info['local_product_version'] %>"/>
+                <% end %>
+              </form>
+            <% else %>
+              <gcse:searchbox></gcse:searchbox>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
   </header>
   <% if !current_page.data.title %>
     <header class="header-home-global">
